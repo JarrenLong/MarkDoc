@@ -2,108 +2,110 @@
 
 require_once("Parsedown.php");
 
-function startsWith($haystack, $needle)
-{
-  $length = strlen($needle);
-  return (substr($haystack, 0, $length) === $needle);
-}
+class MarkDoc {
 
-function endsWith($haystack, $needle)
-{
-  $length = strlen($needle);
-  if ($length == 0) {
-    return true;
+  protected function startsWith($haystack, $needle) {
+    $length = strlen($needle);
+    return (substr($haystack, 0, $length) === $needle);
   }
 
-  return (substr($haystack, -$length) === $needle);
-}
+  protected function endsWith($haystack, $needle) {
+    $length = strlen($needle);
+    if ($length == 0) {
+      return true;
+    }
 
-function getDirContents($dir, $fileType, &$results = array()){
-  $files = scandir($dir);
+    return (substr($haystack, -$length) === $needle);
+  }
 
-  foreach($files as $key => $value){
-    $path = realpath($dir.DIRECTORY_SEPARATOR.$value);
-    if(!is_dir($path) && endsWith($path, $fileType)) {
-      $results[] = $path;
-    } else if($value != "." && $value != "..") {
-      getDirContents($path, $fileType, $results);
-      if(endsWith($path, $fileType)) {
+  protected function getDirContents($dir, $fileType, &$results = array()){
+    $files = scandir($dir);
+
+    foreach($files as $key => $value){
+      $path = realpath($dir.DIRECTORY_SEPARATOR.$value);
+      if(!is_dir($path) && $this->endsWith($path, $fileType)) {
         $results[] = $path;
+      } else if($value != "." && $value != "..") {
+        $this->getDirContents($path, $fileType, $results);
+        if($this->endsWith($path, $fileType)) {
+          $results[] = $path;
+        }
+      }
+    }
+
+    return $results;
+  }
+
+  protected function generateTOC() {
+    // Regen the ToC file
+    $baseDir = "/home/dev/public_html/";
+    $allFiles = $this->getDirContents($baseDir, '.md');
+
+    $toc = fopen("toc.md", "w");
+    fwrite($toc, "# Master Sitemap\r\n");
+    fwrite($toc, "## &copy; 2018 [Books N' Bytes, Inc.](https://www.booksnbytes.net)\r\n\r\n");
+
+    foreach($allFiles as &$p) {
+      $tmp = str_replace($baseDir, '', $p);
+      fwrite($toc, ' * [' . str_replace(".md",'',$tmp) . '](http://' . $_SERVER["SERVER_NAME"] . '?p=' . $tmp . ")\r\n");
+    }
+    fclose($toc);
+  }
+
+  protected function dumpWP() {
+    $q = "SELECT CONCAT('Posted by ', U.display_name, ' at ', P.post_date) as posted_by, P.post_title, P.post_content FROM wp_posts P LEFT JOIN wp_users U ON P.post_author=U.ID WHERE post_type='post' and post_status='publish'";
+
+    $conn = new mysqli('localhost', 'docs', 'P@ssword1!', 'docs');
+    $res = $conn->query($q);
+
+    if($res->num_rows > 0) {
+      while($row = $res->fetch_assoc()) {
+        $fn = "posts/" . str_replace(" ", "_", $row["post_title"]) . ".md";
+        $contents = "# " .
+            $row["post_title"] .
+            "\r\n\r\n### " .
+            $row["posted_by"] .
+            "\r\n\r\n" .
+            $row["post_content"];
+        file_put_contents($fn, $contents);
       }
     }
   }
 
-  return $results;
-}
-
-function generateTOC() {
-  // Regen the ToC file
-  $baseDir = "/home/dev/public_html/";
-  $allFiles = getDirContents($baseDir, '.md');
-
-  $toc = fopen("toc.md", "w");
-  fwrite($toc, "# Master Sitemap\r\n");
-  fwrite($toc, "## &copy; 2018 [Books N' Bytes, Inc.](https://www.booksnbytes.net)\r\n\r\n");
-
-  foreach($allFiles as &$p) {
-    $tmp = str_replace($baseDir, '', $p);
-    fwrite($toc, ' * [' . str_replace(".md",'',$tmp) . '](http://' . $_SERVER["SERVER_NAME"] . '?p=' . $tmp . ")\r\n");
-  }
-  fclose($toc);
-}
-
-function dumpWP() {
-  $q = "SELECT CONCAT('Posted by ', U.display_name, ' at ', P.post_date) as posted_by, P.post_title, P.post_content FROM wp_posts P LEFT JOIN wp_users U ON P.post_author=U.ID WHERE post_type='post' and post_status='publish'";
-
-  $conn = new mysqli('localhost', 'docs', 'P@ssword1!', 'docs');
-  $res = $conn->query($q);
-
-  if($res->num_rows > 0) {
-    while($row = $res->fetch_assoc()) {
-      $fn = "posts/" . str_replace(" ", "_", $row["post_title"]) . ".md";
-      $contents = "# " .
-          $row["post_title"] .
-          "\r\n\r\n### " .
-          $row["posted_by"] .
-          "\r\n\r\n" .
-          $row["post_content"];
-      file_put_contents($fn, $contents);
+  public function processRequest() {
+    // Find the requested file
+    $page = htmlspecialchars($_GET["p"]);
+    // Failover to index
+    if($page == null || $page == '') {
+      $page = "index.md";
     }
-  }
-}
+    // No parent relative paths
+    $page = str_replace("..", "", $page);
+    // Make sure we're only looking at markdown files
+    if(!$this->endsWith($page, '.md')) {
+      $page = $page . ".md";
+    }
+    if($page == "dump.md") {
+      // Pull posts out of a WP db and dump them into MD files
+      $this->dumpWP();
+      $page = "tic.md";
+    }
+    if($page == "tic.md") {
+      // Regenerate the TOC
+      $this->generateTOC();
+      $page = "toc.md";
+    }
+    // Failover to index if required file does not exist
+    if(!file_exists($page)) {
+      $page = "index.md";
+    }
 
-function processRequest() {
-  // Find the requested file
-  $page = htmlspecialchars($_GET["p"]);
-  // Failover to index
-  if($page == null || $page == '') {
-    $page = "index.php";
-  }
-  // No parent relative paths
-  $page = str_replace("..", "", $page);
-  // Make sure we're only looking at markdown files
-  if(!endsWith($page, '.md')) {
-    $page = $page . ".md";
-  }
-  if($page == "dump.md") {
-    // Pull everything out of WP db
-    dumpWP();
-    $page = "tic.md";
-  }
-  if($page == "tic.md") {
-    // Regenerate the TOC
-    generateTOC();
-    $page = "toc.md";
-  }
-  // Failover to index if requirest file does not exist
-  if(!file_exists($page)) {
-    $page = "index.md";
+    // Read and render the markdown file
+    $md = file_get_contents($page);
+    $Parsedown = new Parsedown();
+    echo $Parsedown->text($md);
   }
 
-  // Read and render the markdown file
-  $md = file_get_contents($page);
-  $Parsedown = new Parsedown();
-  echo $Parsedown->text($md);
 }
 ?>
 
@@ -120,7 +122,7 @@ function processRequest() {
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="?p=index">Mark Doc</a>
+      <a class="navbar-brand" href="?p=index">MarkDoc</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -170,7 +172,10 @@ function processRequest() {
     <main role="main" class="container">
       <div class="starter-template" style="padding-top:80px;">
 
-<?php processRequest(); ?>
+<?php
+$md = new MarkDoc();
+$md->processRequest();
+?>
 
       </div>
     </main>
