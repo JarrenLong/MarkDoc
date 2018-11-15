@@ -32,7 +32,7 @@ echo <<<EOF
             <a class='nav-link dropdown-toggle' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Help</a>
             <div class='dropdown-menu' aria-labelledby='dropdown01'>
               <a class='dropdown-item' href='?p=README'>About MarkDoc</a>
-			  <a class='dropdown-item' href='?p=changelog'>Changelog</a>
+              <a class='dropdown-item' href='?p=changelog'>Changelog</a>
             </div>
           </li>
         </ul>
@@ -51,7 +51,7 @@ EOF;
 require_once('MarkDoc.php');
 
 $md = new MarkDoc();
-$md->processRequest();
+$md->processRequest($_GET[MarkDoc::requestVar]);
 
 echo <<<EOF
 
