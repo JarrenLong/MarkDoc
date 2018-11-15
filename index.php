@@ -51,7 +51,7 @@ EOF;
 require_once('MarkDoc.php');
 
 $md = new MarkDoc();
-$md->processRequest($_GET[MarkDoc::requestVar]);
+echo $md->processRequest($_SERVER['REQUEST_URI']);
 
 echo <<<EOF
 
