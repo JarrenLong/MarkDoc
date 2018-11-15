@@ -12,6 +12,21 @@ class MarkDoc {
   private const page_wp = "wp-import.md";
 
 
+  // Makes a directory if it does not already exist (supports nested directory creation)
+  protected function safeMkdir($path) {
+    $p = './' . str_replace(getcwd(), '', $path);
+    if(!file_exists($p)) {
+      return mkdir($p, 0775, true);
+    }
+    return true;
+  }
+
+  // Downloads a file from a remote URL to the destination on this server
+  protected function downloadFromURL($url, $dest) {
+    safeMkdir($dest);
+    file_put_contents($dest, fopen($url, 'rb'));
+  }
+
   // Checks if a string starts with another string
   protected function startsWith($haystack, $needle) {
     $length = strlen($needle);
