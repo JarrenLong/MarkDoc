@@ -4,12 +4,12 @@ require_once("Parsedown.php");
 
 class MarkDoc {
 
-  private const $requestVar = "p";
-  private const $mdFile = ".md";
-  private const $page_default = "README.md";
-  private const $page_tic = "tic.md";
-  private const $page_toc = "toc.md";
-  private const $page_wp = "wp-import.md";
+  private const requestVar = "p";
+  private const mdFile = ".md";
+  private const page_default = "README.md";
+  private const page_tic = "tic.md";
+  private const page_toc = "toc.md";
+  private const page_wp = "wp-import.md";
   
   
   // Checks if a string starts with another string
