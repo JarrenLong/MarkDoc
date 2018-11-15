@@ -75,9 +75,9 @@ class MarkDoc {
   public function processRequest() {
     // Find the requested file
     $page = htmlspecialchars($_GET["p"]);
-    // Failover to index
+    // Failover to README file
     if($page == null || $page == '') {
-      $page = "index.md";
+      $page = "README.md";
     }
     // No parent relative paths
     $page = str_replace("..", "", $page);
@@ -97,7 +97,7 @@ class MarkDoc {
     }
     // Failover to index if required file does not exist
     if(!file_exists($page)) {
-      $page = "index.md";
+      $page = "README.md";
     }
 
     // Read and render the markdown file
