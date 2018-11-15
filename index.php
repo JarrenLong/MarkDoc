@@ -26,28 +26,10 @@
           </li>
           <!-- <li class="nav-item"><a class="nav-link disabled" href="#">Disabled</a></li> -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Changelog</a>
+            <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Help</a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="?p=changelog">Most Recent</a>
-              <a class="dropdown-item" href="?p=changes/v2.8x">v2.8</a>
-              <a class="dropdown-item" href="?p=changes/v2.7x">v2.7</a>
-              <a class="dropdown-item" href="?p=changes/v2.6x">v2.6</a>
-              <a class="dropdown-item" href="?p=changes/v2.5x">v2.5</a>
-              <a class="dropdown-item" href="?p=changes/v2.4x">v2.4</a>
-              <a class="dropdown-item" href="?p=changes/v2.3x">v2.3</a>
-              <a class="dropdown-item" href="?p=changes/v2.2x">v2.2</a>
-              <a class="dropdown-item" href="?p=changes/v2.1x">v2.1</a>
-              <a class="dropdown-item" href="?p=changes/v2.0x">v2.0</a>
-              <a class="dropdown-item" href="?p=changes/v1.9x">v1.9</a>
-              <a class="dropdown-item" href="?p=changes/v1.8x">v1.8</a>
-              <a class="dropdown-item" href="?p=changes/v1.7x">v1.7</a>
-              <a class="dropdown-item" href="?p=changes/v1.6x">v1.6</a>
-              <a class="dropdown-item" href="?p=changes/v1.5x">v1.5</a>
-              <a class="dropdown-item" href="?p=changes/v1.4x">v1.4</a>
-              <a class="dropdown-item" href="?p=changes/v1.3x">v1.3</a>
-              <a class="dropdown-item" href="?p=changes/v1.2x">v1.2</a>
-              <a class="dropdown-item" href="?p=changes/v1.1x">v1.1</a>
-              <a class="dropdown-item" href="?p=changes/v1.0x">v1.0</a>
+              <a class="dropdown-item" href="?p=README">About MarkDoc</a>
+			  <a class="dropdown-item" href="?p=changelog">Changelog</a>
             </div>
           </li>
         </ul>
