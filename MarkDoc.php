@@ -6,7 +6,7 @@ class MarkDoc {
 
   public const requestVar = "p";
   private const mdFile = ".md";
-  private const page_default = "README.md";
+  private const page_default = "index.md";
   private const page_tic = "tic.md";
   private const page_toc = "toc.md";
   private const page_wp = "wp-import.md";
