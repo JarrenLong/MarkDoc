@@ -14,7 +14,7 @@ echo <<<EOF
 </head>
 <body>
     <nav class='navbar navbar-expand-md navbar-dark bg-dark fixed-top'>
-      <a class='navbar-brand' href='?p=index'>MarkDoc</a>
+      <a class='navbar-brand' href='https://www.booksnbytes.net'>MarkDoc</a>
       <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarsExampleDefault' aria-controls='navbarsExampleDefault' aria-expanded='false' aria-label='Toggle navigation'>
         <span class='navbar-toggler-icon'></span>
       </button>
@@ -22,17 +22,17 @@ echo <<<EOF
       <div class='collapse navbar-collapse' id='navbarsExampleDefault'>
         <ul class='navbar-nav mr-auto'>
           <li class='nav-item active'>
-            <a class='nav-link' href='?p=index'>Home <span class='sr-only'>(current)</span></a>
+            <a class='nav-link' href='/'>Home <span class='sr-only'>(current)</span></a>
           </li>
           <li class='nav-item'>
-            <a class='nav-link' href='?p=toc'>Table of Contents</a>
+            <a class='nav-link' href='/toc'>Table of Contents</a>
           </li>
           <!-- <li class='nav-item'><a class='nav-link disabled' href='#'>Disabled</a></li> -->
           <li class='nav-item dropdown'>
             <a class='nav-link dropdown-toggle' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Help</a>
             <div class='dropdown-menu' aria-labelledby='dropdown01'>
-              <a class='dropdown-item' href='?p=README'>About MarkDoc</a>
-              <a class='dropdown-item' href='?p=changelog'>Changelog</a>
+              <a class='dropdown-item' href='/README'>About MarkDoc</a>
+              <a class='dropdown-item' href='/changelog'>Changelog</a>
             </div>
           </li>
         </ul>
