@@ -47,7 +47,8 @@ class MarkDoc {
 
     foreach($allFiles as &$p) {
       $tmp = str_replace($baseDir, '', $p);
-      fwrite($toc, ' * [' . str_replace(".md",'',$tmp) . '](http://' . $_SERVER["SERVER_NAME"] . '?p=' . $tmp . ")\n");
+	  $tmp = str_replace(".md",'',$tmp);
+      fwrite($toc, ' * [' . $tmp . '](http://' . $_SERVER["SERVER_NAME"] . '?p=' . $tmp . ")\n");
     }
     fclose($toc);
   }
