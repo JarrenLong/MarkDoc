@@ -36,18 +36,18 @@ class MarkDoc {
     return $results;
   }
 
+  // Regenerate the Table of Contents file
   protected function generateTOC() {
-    // Regen the ToC file
-    $baseDir = "/home/dev/public_html/";
+    $baseDir = getcwd();
     $allFiles = $this->getDirContents($baseDir, '.md');
 
     $toc = fopen("toc.md", "w");
-    fwrite($toc, "# Master Sitemap\r\n");
-    fwrite($toc, "## &copy; 2018 [Books N' Bytes, Inc.](https://www.booksnbytes.net)\r\n\r\n");
+    fwrite($toc, "# Table of Contents\n");
+    fwrite($toc, "## &copy; 2018 [Books N' Bytes, Inc.](https://www.booksnbytes.net)\n\n");
 
     foreach($allFiles as &$p) {
       $tmp = str_replace($baseDir, '', $p);
-      fwrite($toc, ' * [' . str_replace(".md",'',$tmp) . '](http://' . $_SERVER["SERVER_NAME"] . '?p=' . $tmp . ")\r\n");
+      fwrite($toc, ' * [' . str_replace(".md",'',$tmp) . '](http://' . $_SERVER["SERVER_NAME"] . '?p=' . $tmp . ")\n");
     }
     fclose($toc);
   }
