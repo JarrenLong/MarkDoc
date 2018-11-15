@@ -23,7 +23,7 @@ class MarkDoc {
 
   // Downloads a file from a remote URL to the destination on this server
   protected function downloadFromURL($url, $dest) {
-    safeMkdir($dest);
+    safeMkdir(dirname($dest));
     file_put_contents($dest, fopen($url, 'rb'));
   }
 
