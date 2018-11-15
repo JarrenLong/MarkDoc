@@ -38,7 +38,7 @@ class MarkDoc {
 
   // Regenerate the Table of Contents file
   protected function generateTOC() {
-    $baseDir = getcwd();
+    $baseDir = getcwd() . "/";
     $allFiles = $this->getDirContents($baseDir, '.md');
 
     $toc = fopen("toc.md", "w");
