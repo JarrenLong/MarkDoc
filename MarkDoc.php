@@ -1,19 +1,52 @@
 <?php
+/**
+ * MarkDoc
+ * http://markdoc.long-technical.com
+ *
+ * (c) 2018 Books N' Bytes, Inc.
+ * https://www.booksnbytes.net
+ * Created by Jarren Long
+ *
+ * For the full license information, view the LICENSE file that was distributed with this source code.
+ */
 
+
+// Require that the Markdown rendering engine be present
 require_once("Parsedown.php");
 
+
+/**
+ * The MarkDoc class is the powerhouse of MarkDoc. All of the magic happens here.
+ */
 class MarkDoc {
 
-  public const requestVar = "p";
-  private const mdFile = ".md";
-  private const page_default = "index.md";
-  private const page_tic = "tic.md";
-  private const page_toc = "toc.md";
-  private const page_wp = "wp-import.md";
+  // {{{ Constants
 
+  /**
+   * MarkDoc API Version
+   */
+  const Version = "v0.0.x";
+  /**
+   * Default HTTP GET request variable to define the path to the markdown file to render
+   */
+  const requestVar = "p";
 
-  // Makes a directory if it does not already exist (supports nested directory creation)
-  protected function safeMkdir($path) {
+  const mdFile = ".md";
+  const page_default = "index.md";
+  const page_tic = "tic.md";
+  const page_toc = "toc.md";
+  const page_wp = "wp-import.md";
+
+  // }}}
+  // {{{ Private functions
+
+  /**
+   * Makes a directory if it does not already exist (supports nested directory creation)
+   *
+   * @param string $path    Relative path of the directory to create
+   * @return bool    True if the directory is created/exists, or false on error
+   */
+  private function safeMkdir($path) {
     $p = './' . str_replace(getcwd(), '', $path);
     if(!file_exists($p)) {
       return mkdir($p, 0775, true);
@@ -21,20 +54,26 @@ class MarkDoc {
     return true;
   }
 
-  // Downloads a file from a remote URL to the destination on this server
-  protected function downloadFromURL($url, $dest) {
+  /**
+   * Downloads a file from a remote URL to the destination on this server
+   */
+  private function downloadFromURL($url, $dest) {
     safeMkdir(dirname($dest));
     file_put_contents($dest, fopen($url, 'rb'));
   }
 
-  // Checks if a string starts with another string
-  protected function startsWith($haystack, $needle) {
+  /**
+   * Checks if a string starts with another string
+   */
+  private function startsWith($haystack, $needle) {
     $length = strlen($needle);
     return (substr($haystack, 0, $length) === $needle);
   }
 
-  // Checks if a string ends with another string
-  protected function endsWith($haystack, $needle) {
+  /**
+   * Checks if a string ends with another string
+   */
+  private function endsWith($haystack, $needle) {
     $length = strlen($needle);
     if ($length == 0) {
       return true;
@@ -43,13 +82,17 @@ class MarkDoc {
     return (substr($haystack, -$length) === $needle);
   }
 
-  // Check if a string contains another string
-  protected function contains($haystack, $needle) {
+  /**
+   * Check if a string contains another string
+   */
+  private function contains($haystack, $needle) {
     return (strpos($haystack, $needle) !== false);
   }
 
-  // Recursively get all files in $dir
-  protected function getDirContents($dir, $fileType, &$results = array()){
+  /**
+   * Recursively get all files in $dir
+   */
+  private function getDirContents($dir, $fileType, &$results = array()){
     $files = scandir($dir);
 
     foreach($files as $key => $value){
@@ -67,8 +110,10 @@ class MarkDoc {
     return $results;
   }
 
-  // Regenerate the Table of Contents file
-  protected function generateTOC() {
+  /**
+   * Regenerate the Table of Contents file
+   */
+  private function generateTOC() {
     $baseDir = getcwd() . "/";
     $allFiles = $this->getDirContents($baseDir, self::mdFile);
 
@@ -85,8 +130,10 @@ class MarkDoc {
     fclose($toc);
   }
 
-  // Imports all published posts from the specified Wordpress database as Markdown files
-  protected function importFromWP($wpHost, $wpUser, $wpPass, $wpDbName) {
+  /**
+   * Imports all published posts from the specified Wordpress database as Markdown files
+   */
+  private function importFromWP($wpHost, $wpUser, $wpPass, $wpDbName) {
     $q = "SELECT CONCAT('Posted by ', U.display_name, ' at ', P.post_date) as posted_by, P.post_title, P.post_content FROM wp_posts P LEFT JOIN wp_users U ON P.post_author=U.ID WHERE post_type='post' and post_status='publish'";
 
     $conn = new mysqli($wpHost, $wpUser, $wpPass, $wDbName);
@@ -106,13 +153,18 @@ class MarkDoc {
     }
   }
 
-  // Handles request processing for MarkDoc
+  // }}}
+  // {{{ Public functions
+
+  /**
+   * Handles request processing for MarkDoc
+   */
   public function processRequest($uri) {
 
     // Find the requested file
     $page = htmlspecialchars($uri);
 
-    // Failover to README file
+    // Failover to default page
     if($page == null || $page == '' || $page == '/') {
       $page = self::page_default;
     } else {
@@ -156,6 +208,8 @@ class MarkDoc {
     $Parsedown = new Parsedown();
     return $Parsedown->text($md);
   }
+
+  // }}}
 
 }
 ?>
