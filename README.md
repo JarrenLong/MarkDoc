@@ -33,13 +33,13 @@ Once your new MarkDoc site is installed, you will be ready to start adding pages
 Here's an example of what your website's URLs could look like:
 
 ```
-- /markdoc               <-- Markdoc install directory, base site URL of http://markdoc.long-technical.com/
-|-- MyFirstPage.md       <-- http://markdoc.long-technical.com/MyFirstPage
-|-- AnotherPage.md       <-- http://markdoc.long-technical.com/AnotherPage
+| markdoc/                  <-- Markdoc install directory, base site URL of http://markdoc.long-technical.com/
+|-- MyFirstPage.md          <-- http://markdoc.long-technical.com/MyFirstPage
+|-- AnotherPage.md          <-- http://markdoc.long-technical.com/AnotherPage
 |-- faqs/
-|---- Question1.md       <-- http://markdoc.long-technical.com/faqs/Question1
+|---- Question1.md          <-- http://markdoc.long-technical.com/faqs/Question1
 |-- contact/
-|---- social.md          <-- http://markdoc.long-technical.com/contact/social
+|---- social.md             <-- http://markdoc.long-technical.com/contact/social
 |---- ...
 ```
 
@@ -52,3 +52,21 @@ Note: If you ever upload new content to your website, it is a good idea to Regen
 
 ## Customize your website
 Your website is probably up and running now, and has some of your own customized content uploaded. But...it looks boring! Try modifying the index.php file that is installed with MarkDoc to change the style of your website. By default, MarkDoc uses a very simple [Bootstrap](http://getbootstrap.com/) starter theme, which can be customized however you like. Just make sure that you leave the PHP code in place that actually powers MarkDoc.
+
+## Using MarkDoc with your own website
+You might decide that you want to just integrate MarkDoc into your own website, we completely get it. And, it's _really easy to do_. Start out by downloading and unpacking the MarkDoc installer package into your existing website. Be sure to exclude the index.php file.
+
+Now, use a text editor to edit the PHP file that you want to leverage MarkDoc, and add the following code:
+
+```
+require_once('MarkDoc.php');
+
+$md = new MarkDoc();
+echo $md->processRequest($_SERVER['REQUEST_URI']);
+```
+
+Save and close the file, and refresh your browser. You should now see the default index.md page that comes with MarkDoc rendered in your page as HTML.
+
+## Getting Help
+Having trouble with MarkDoc? Want some help with setting it up or integrating it with your website? We want to hear from you! [Send us an email](https://www.booksnbytes.net/contact), and we would be happy to assist you.
+
