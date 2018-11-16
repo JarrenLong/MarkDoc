@@ -1,13 +1,14 @@
 <?php
 /**
- * MarkDoc
- * http://markdoc.long-technical.com
+ * MarkDoc, the easy website builder.
  *
- * (c) 2018 Books N' Bytes, Inc.
- * https://www.booksnbytes.net
- * Created by Jarren Long
- *
- * For the full license information, view the LICENSE file that was distributed with this source code.
+ * @category   WebsiteBuilder
+ * @package    MarkDoc
+ * @version    v0.0.x
+ * @author     Jarren Long <jlong@booksnbytes.net>
+ * @copyright  2018 Books N' Bytes, Inc.
+ * @link       https://www.booksnbytes.net
+ * @license    https://www.booksnbytes.net/markdoc
  */
 
 
@@ -43,8 +44,8 @@ class MarkDoc {
   /**
    * Makes a directory if it does not already exist (supports nested directory creation)
    *
-   * @param string $path    Relative path of the directory to create
-   * @return bool    True if the directory is created/exists, or false on error
+   * @param string $path  Relative path of the directory to create
+   * @return boolean      True if the directory is created/exists, or false on error
    */
   private function safeMkdir($path) {
     $p = './' . str_replace(getcwd(), '', $path);
@@ -56,6 +57,9 @@ class MarkDoc {
 
   /**
    * Downloads a file from a remote URL to the destination on this server
+   *
+   * @param string $url   
+   * @param string $dest  
    */
   private function downloadFromURL($url, $dest) {
     safeMkdir(dirname($dest));
@@ -64,6 +68,8 @@ class MarkDoc {
 
   /**
    * Checks if a string starts with another string
+   * @param string $haystack  
+   * @param string $needle    
    */
   private function startsWith($haystack, $needle) {
     $length = strlen($needle);
@@ -72,6 +78,9 @@ class MarkDoc {
 
   /**
    * Checks if a string ends with another string
+   *
+   * @param string $haystack  
+   * @param string $needle    
    */
   private function endsWith($haystack, $needle) {
     $length = strlen($needle);
@@ -84,13 +93,21 @@ class MarkDoc {
 
   /**
    * Check if a string contains another string
+   *
+   * @param string $haystack  
+   * @param string $needle    
    */
   private function contains($haystack, $needle) {
     return (strpos($haystack, $needle) !== false);
   }
 
   /**
-   * Recursively get all files in $dir
+   * Recursively get all files in the specified directory
+   *
+   * @param string $dir       
+   * @param string $fileType  
+   * @param array  $results   
+   * @return array            An array of all files in the specified directory and all child directories
    */
   private function getDirContents($dir, $fileType, &$results = array()){
     $files = scandir($dir);
@@ -132,6 +149,11 @@ class MarkDoc {
 
   /**
    * Imports all published posts from the specified Wordpress database as Markdown files
+   *
+   * @param string $wpHost    
+   * @param string $wpUser    
+   * @param string $wpPass    
+   * @param string $wpDbName  
    */
   private function importFromWP($wpHost, $wpUser, $wpPass, $wpDbName) {
     $q = "SELECT CONCAT('Posted by ', U.display_name, ' at ', P.post_date) as posted_by, P.post_title, P.post_content FROM wp_posts P LEFT JOIN wp_users U ON P.post_author=U.ID WHERE post_type='post' and post_status='publish'";
@@ -158,6 +180,9 @@ class MarkDoc {
 
   /**
    * Handles request processing for MarkDoc
+   *
+   * @param string $url  The URL to the markdown resource to render
+   * @return string      A HTML string of the converted markdown file
    */
   public function processRequest($uri) {
 
