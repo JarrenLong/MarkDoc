@@ -24,6 +24,9 @@
           <li class='nav-item'>
             <a class='nav-link' href='/toc'>Table of Contents</a>
           </li>
+          <li>
+            <a class='nav-link' href='/download'>Download</a>
+          </li>
           <!-- <li class='nav-item'><a class='nav-link disabled' href='#'>Disabled</a></li> -->
           <li class='nav-item dropdown'>
             <a class='nav-link dropdown-toggle' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Help</a>
