@@ -17,15 +17,11 @@ Using MarkDoc is very easy, and can be set up and running in under five minutes 
 * PHP v5.2 or newer
 
 ## Installing MarkDoc
-### Using the installer package
-1. Download the MarkDoc package at [https://www.booksnbytes.net/markdoc](https://www.booksnbytes.net/markdoc). MarkDoc is packaged as both .zip and .tar.gz archives, use whichever one you prefer.
+1. Download the MarkDoc package at [https://markdoc.booksnbytes.net/download](https://markdoc.booksnbytes.net/download). MarkDoc is packaged as both .zip and .tar.gz archives, use whichever one you prefer.
 2. Upload the archive to your web server using FTP/SFTP.
 3. Extract the contents of the archive to the directory where you will host your website from.
 4. Configure Apache with a new site (point it at the directory where the MarkDoc files live), and enable the site.
 5. Open a web browser, and navigate to the URL where your MarkDoc site is configured, you should see this readme!
-
-### Using the install script
-On Linux webservers, you can [download and run the following script](https://www.booksnbytes.net/markdoc/install-markdoc.sh) to automatically install and configure a MarkDoc installation. Be sure to take a look at the script before you execute it (NEVER run a script unless you know what it does! That's just not a safe thing to do). This script will perform the same steps as you would by using the installer package.
 
 ## Upload your Markdown Files
 Once your new MarkDoc site is installed, you will be ready to start adding pages to it. Using a FTP/SFTP client, start uploading your Markdown documents to your website. If you have your documents nested in folders/directories, that's OK! MarkDoc will be able to find them. Keep in mind that the location of your markdown files will determine the URL used to view them in the website.
@@ -33,13 +29,13 @@ Once your new MarkDoc site is installed, you will be ready to start adding pages
 Here's an example of what your website's URLs could look like:
 
 ```
-| markdoc/                  <-- Markdoc install directory, base site URL of http://markdoc.long-technical.com/
-|-- MyFirstPage.md          <-- http://markdoc.long-technical.com/MyFirstPage
-|-- AnotherPage.md          <-- http://markdoc.long-technical.com/AnotherPage
+| markdoc/                  <-- Markdoc install directory, base site URL of http://markdoc.booksnbytes.net/
+|-- MyFirstPage.md          <-- http://markdoc.booksnbytes.net/MyFirstPage
+|-- AnotherPage.md          <-- http://markdoc.booksnbytes.net/AnotherPage
 |-- faqs/
-|---- Question1.md          <-- http://markdoc.long-technical.com/faqs/Question1
+|---- Question1.md          <-- http://markdoc.booksnbytes.net/faqs/Question1
 |-- contact/
-|---- social.md             <-- http://markdoc.long-technical.com/contact/social
+|---- social.md             <-- http://markdoc.booksnbytes.net/contact/social
 |---- ...
 ```
 
