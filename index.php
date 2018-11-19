@@ -32,6 +32,7 @@
             <a class='nav-link dropdown-toggle' id='dropdown01' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Help</a>
             <div class='dropdown-menu' aria-labelledby='dropdown01'>
               <a class='dropdown-item' href='/README'>About MarkDoc</a>
+              <a class='dropdown-item' href='/LICENSE'>License</a>
               <a class='dropdown-item' href='/CHANGELOG'>Changelog</a>
             </div>
           </li>
