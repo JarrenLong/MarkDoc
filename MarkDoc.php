@@ -7,8 +7,8 @@
  * @version    v0.0.x
  * @author     Jarren Long <jlong@booksnbytes.net>
  * @copyright  2018 Books N' Bytes, Inc.
- * @link       https://www.booksnbytes.net
- * @license    https://www.booksnbytes.net/markdoc
+ * @link       https://markdoc.booksnbytes.net
+ * @license    https://markdoc.booksnbytes.net
  */
 
 
@@ -58,18 +58,18 @@ class MarkDoc {
   /**
    * Downloads a file from a remote URL to the destination on this server
    *
-   * @param string $url   
-   * @param string $dest  
+   * @param string $url   URL to the resource to download to this server
+   * @param string $dest  Destination path on this server for the downloaded file
    */
   private function downloadFromURL($url, $dest) {
     safeMkdir(dirname($dest));
     file_put_contents($dest, fopen($url, 'rb'));
   }
-
+v
   /**
    * Checks if a string starts with another string
-   * @param string $haystack  
-   * @param string $needle    
+   * @param string $haystack  The string to check
+   * @param string $needle    The string to check for
    */
   private function startsWith($haystack, $needle) {
     $length = strlen($needle);
@@ -79,8 +79,8 @@ class MarkDoc {
   /**
    * Checks if a string ends with another string
    *
-   * @param string $haystack  
-   * @param string $needle    
+   * @param string $haystack  The string to check
+   * @param string $needle    The string to check for
    */
   private function endsWith($haystack, $needle) {
     $length = strlen($needle);
@@ -94,8 +94,8 @@ class MarkDoc {
   /**
    * Check if a string contains another string
    *
-   * @param string $haystack  
-   * @param string $needle    
+   * @param string $haystack  The string to check
+   * @param string $needle    The string to check for
    */
   private function contains($haystack, $needle) {
     return (strpos($haystack, $needle) !== false);
@@ -104,9 +104,9 @@ class MarkDoc {
   /**
    * Recursively get all files in the specified directory
    *
-   * @param string $dir       
-   * @param string $fileType  
-   * @param array  $results   
+   * @param string $dir       The directory to recursively search
+   * @param string $fileType  The types of files that will be added to the file array
+   * @param array  $results   Reference to the results array (for recursive calls only)
    * @return array            An array of all files in the specified directory and all child directories
    */
   private function getDirContents($dir, $fileType, &$results = array()){
@@ -150,10 +150,10 @@ class MarkDoc {
   /**
    * Imports all published posts from the specified Wordpress database as Markdown files
    *
-   * @param string $wpHost    
-   * @param string $wpUser    
-   * @param string $wpPass    
-   * @param string $wpDbName  
+   * @param string $wpHost    The host of the mysql WP database
+   * @param string $wpUser    MySQL username
+   * @param string $wpPass    MySQL password
+   * @param string $wpDbName  The name of the WP database
    */
   private function importFromWP($wpHost, $wpUser, $wpPass, $wpDbName) {
     $q = "SELECT CONCAT('Posted by ', U.display_name, ' at ', P.post_date) as posted_by, P.post_title, P.post_content FROM wp_posts P LEFT JOIN wp_users U ON P.post_author=U.ID WHERE post_type='post' and post_status='publish'";
