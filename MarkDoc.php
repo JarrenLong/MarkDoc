@@ -65,7 +65,7 @@ class MarkDoc {
     safeMkdir(dirname($dest));
     file_put_contents($dest, fopen($url, 'rb'));
   }
-v
+
   /**
    * Checks if a string starts with another string
    * @param string $haystack  The string to check
