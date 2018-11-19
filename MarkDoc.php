@@ -228,10 +228,23 @@ class MarkDoc {
       $page = self::page_default;
     }
 
-    // Read and render the markdown file
-    $md = file_get_contents($page);
-    $Parsedown = new Parsedown();
-    return $Parsedown->text($md);
+    return $this->renderPage($page);
+  }
+
+  /**
+   * Renders the specified markdown page
+   *
+   * @param string $url  The URL to the markdown resource to render
+   * @return string      The markdown page rendered as HTML
+   */
+  public function renderPage($uri) {
+    if(file_exists($uri)) {
+      // Read and render the markdown file
+      $md = file_get_contents($uri);
+      $Parsedown = new Parsedown();
+      return $Parsedown->text($md);
+    }
+    return "";
   }
 
   // }}}
