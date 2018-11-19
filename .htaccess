@@ -1,4 +1,10 @@
+# Enable mod_rewrite
 RewriteEngine on
 
-RewriteCond %{REQUEST_FILENAME} !-f
+## Apache prior to v2.2
+#RewriteCond %{REQUEST_FILENAME} !-f
+# Apache v2.2 and newer
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-f
+
+# Everything else, send to MarkDoc to process
 RewriteRule ^(.*)$ index.php?p=$1 [L]
