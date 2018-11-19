@@ -1,6 +1,3 @@
-<?php
-
-echo <<<EOF
 <!DOCTYPE html>
 <html>
 <head lang='en'>
@@ -46,14 +43,14 @@ echo <<<EOF
     <main role='main' class='container'>
       <div class='starter-template' style='padding-top:80px;'>
 
-EOF;
+<?php
 
 require_once('MarkDoc.php');
 
 $md = new MarkDoc();
 echo $md->processRequest($_SERVER['REQUEST_URI']);
 
-echo <<<EOF
+?>
 
       </div>
     </main>
@@ -65,4 +62,3 @@ echo <<<EOF
 </body>
 </html>
 
-EOF;
