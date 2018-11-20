@@ -110,9 +110,13 @@
 require_once('MarkDoc.php');
 
 $md = new MarkDoc();
-echo $md->processRequest($_SERVER['REQUEST_URI']);
-
 ?>
+        <div id="table-of-contents" class="col-4">
+<?php echo $md->renderPage('toc.md'); ?>
+        </div>
+        <div id="main-page" class="col-8">
+<?php echo $md->processRequest($_SERVER['REQUEST_URI']); ?>
+        </div>
 
       </div>
     </main>
