@@ -55,6 +55,15 @@
   table, tr, td {
     border: 1px solid #343a40;
   }
+  footer {
+    width: 100%;
+    text-align: center;
+    padding: 24px;
+    background: #343a40!important;
+    color: rgba(255,255,255,0.5);
+    position: fixed;
+    bottom: 0;
+  }
   </style>
 </head>
 <body>
@@ -91,7 +100,7 @@
     </nav>
 
     <main role="main" class="container">
-      <div class="starter-template" style="padding-top:80px;">
+      <div class="starter-template" style="padding-top:80px;padding-bottom:80px;">
 
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <!-- MarkDoc -->
@@ -110,16 +119,17 @@
 require_once('MarkDoc.php');
 
 $md = new MarkDoc();
+echo $md->processRequest($_SERVER['REQUEST_URI']);
 ?>
-        <div id="table-of-contents" class="col-4">
-<?php echo $md->renderPage('toc.md'); ?>
-        </div>
-        <div id="main-page" class="col-8">
-<?php echo $md->processRequest($_SERVER['REQUEST_URI']); ?>
-        </div>
 
       </div>
     </main>
+
+    <br/>
+
+    <footer>
+<?php echo $md->renderPage('footer.md'); ?>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
