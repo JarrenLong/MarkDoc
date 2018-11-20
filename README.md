@@ -21,7 +21,8 @@ Using MarkDoc is very easy, and can be set up and running in under five minutes 
 2. Upload the archive to your web server using FTP/SFTP.
 3. Extract the contents of the archive to the directory where you will host your website from.
 4. Configure Apache with a new site (point it at the directory where the MarkDoc files live), and enable the site.
-5. Open a web browser, and navigate to the URL where your MarkDoc site is configured, you should see this readme!
+5. Modify the .htaccess file that comes with MarkDoc to use the mod_rewrite rules that match your version of Apache (see comments in .htaccess).
+6. Open a web browser, and navigate to the URL where your MarkDoc site is configured, you should see this readme!
 
 ## Upload your Markdown Files
 Once your new MarkDoc site is installed, you will be ready to start adding pages to it. Using a FTP/SFTP client, start uploading your Markdown documents to your website. If you have your documents nested in folders/directories, that's OK! MarkDoc will be able to find them. Keep in mind that the location of your markdown files will determine the URL used to view them in the website.
