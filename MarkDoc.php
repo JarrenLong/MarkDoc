@@ -154,11 +154,16 @@ class MarkDoc {
    * @param string $wpUser    MySQL username
    * @param string $wpPass    MySQL password
    * @param string $wpDbName  The name of the WP database
+   * @param string $wpTablePrefix  The prefix used for table names during the WP install
    */
-  private function importFromWP($wpHost, $wpUser, $wpPass, $wpDbName) {
-    $q = "SELECT CONCAT('Posted by ', U.display_name, ' at ', P.post_date) as posted_by, P.post_title, P.post_content FROM wp_posts P LEFT JOIN wp_users U ON P.post_author=U.ID WHERE post_type='post' and post_status='publish'";
+  private function importFromWP($wpHost, $wpUser, $wpPass, $wpDbName, $wpTablePrefix = "wp_") {
+    $q = "SELECT CONCAT('Posted by ', U.display_name, ' at ', P.post_date) as posted_by, P.post_title, P.post_content FROM " . 
+      $wpTablePrefix .
+      "posts P LEFT JOIN " .
+      $wpTablePrefix .
+      "users U ON P.post_author=U.ID WHERE post_type='post' and post_status='publish'";
 
-    $conn = new mysqli($wpHost, $wpUser, $wpPass, $wDbName);
+    $conn = new mysqli($wpHost, $wpUser, $wpPass, $wpDbName);
     $res = $conn->query($q);
 
     if($res->num_rows > 0) {
@@ -213,7 +218,7 @@ class MarkDoc {
 
     if($page == self::page_wp) {
       // Pull posts out of a WP db and dump them into MD files
-      $this->importFromWP('localhost','docs','P@ssword1!','docs');
+      $this->importFromWP('localhost','YourUsername','TestPassword','test_db','wp_');
       $page = self::page_tic;
     }
 
