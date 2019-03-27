@@ -141,7 +141,7 @@ class MarkDoc {
       if(!$this->endsWith($p, self::page_toc)) {
         $tmp = str_replace($baseDir, '', $p);
         $tmp = str_replace(self::mdFile,'',$tmp);
-        fwrite($toc, ' * [' . $tmp . '](' . $tocPage . '?' . self::requestVar . '=' . $tmp . ")\n");
+        fwrite($toc, ' * [' . $tmp . '](' . $tocPage . '?' . self::requestVar . '=posts/' . $tmp . ")\n");
       }
     }
 
