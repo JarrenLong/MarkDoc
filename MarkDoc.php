@@ -130,11 +130,11 @@ class MarkDoc {
   /**
    * Regenerate the Table of Contents file
    */
-  private function generateTOC() {
+  public function generateTOC($saveInDir = '/') {
     $baseDir = getcwd() . "/";
     $allFiles = $this->getDirContents($baseDir, self::mdFile);
 
-    $toc = fopen("toc.md", "w");
+    $toc = fopen($baseDir . $saveInDir . "toc.md", "w");
     fwrite($toc, "# Table of Contents\n\n");
 
     foreach($allFiles as &$p) {
