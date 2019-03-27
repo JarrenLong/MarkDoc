@@ -48,7 +48,7 @@ class MarkDoc {
    * @return boolean      True if the directory is created/exists, or false on error
    */
   private function safeMkdir($path) {
-    $p = './' . str_replace(getcwd(), '', $path);
+    $p = '.' . DIRECTORY_SEPARATOR . str_replace(getcwd(), '', $path);
     if(!file_exists($p)) {
       return mkdir($p, 0775, true);
     }
@@ -113,7 +113,7 @@ class MarkDoc {
     $files = scandir($dir);
 
     foreach($files as $key => $value){
-      $path = realpath($dir.DIRECTORY_SEPARATOR.$value);
+      $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
       if(!is_dir($path) && $this->endsWith($path, $fileType)) {
         $results[] = $path;
       } else if($value != "." && $value != "..") {
@@ -130,11 +130,10 @@ class MarkDoc {
   /**
    * Regenerate the Table of Contents file
    */
-  public function generateTOC($saveInDir = '/') {
-    $baseDir = getcwd() . "/";
+  public function generateTOC($baseDir = DIRECTORY_SEPARATOR, $saveInDir = DIRECTORY_SEPARATOR) {
     $allFiles = $this->getDirContents($baseDir, self::mdFile);
 
-    $toc = fopen($baseDir . $saveInDir . "toc.md", "w");
+    $toc = fopen($saveInDir . "toc.md", "w");
     fwrite($toc, "# Table of Contents\n\n");
 
     foreach($allFiles as &$p) {
@@ -168,7 +167,7 @@ class MarkDoc {
 
     if($res->num_rows > 0) {
       while($row = $res->fetch_assoc()) {
-        $fn = "posts/" . str_replace(" ", "_", $row["post_title"]) . self::mdFile;
+        $fn = "posts" . DIRECTORY_SEPARATOR . str_replace(" ", "_", $row["post_title"]) . self::mdFile;
         $contents = "# " .
             $row["post_title"] .
             "\n\n### " .
@@ -193,9 +192,8 @@ class MarkDoc {
 
     // Find the requested file
     $page = htmlspecialchars($uri);
-
     // Failover to default page
-    if($page == null || $page == '' || $page == '/') {
+    if($page == null || $page == '' || $page == DIRECTORY_SEPARATOR) {
       $page = self::page_default;
     } else {
       $rv = '?' . self::requestVar . '=';
@@ -224,7 +222,7 @@ class MarkDoc {
 
     if($page == self::page_tic) {
       // Regenerate the TOC
-      $this->generateTOC();
+      $this->generateTOC(getcwd() . DIRECTORY_SEPARATOR);
       $page = self::page_toc;
     }
 
