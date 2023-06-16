@@ -1,14 +1,14 @@
 <?php
 /**
- * MarkDoc, the easy website builder.
+ * MarkDoc, the easy website builder. Built on top of Parsedown by Emanuil Rusev.
  *
  * @category   WebsiteBuilder
  * @package    MarkDoc
  * @version    v0.0.x
- * @author     Jarren Long <jlong@booksnbytes.net>
+ * @author     Jarren Long <jarrenlong@gmail.com>
  * @copyright  2018 Books N' Bytes, Inc.
- * @link       https://markdoc.booksnbytes.net
- * @license    https://markdoc.booksnbytes.net
+ * @link       https://github.com/JarrenLong/MarkDoc
+ * @license    https://github.com/JarrenLong/MarkDoc
  */
 
 
