@@ -63,7 +63,3 @@ echo $md->processRequest($_SERVER['REQUEST_URI']);
 ```
 
 Save and close the file, and refresh your browser. You should now see the default index.md page that comes with MarkDoc rendered in your page as HTML.
-
-## Getting Help
-Having trouble with MarkDoc? Want some help with setting it up or integrating it with your website? We want to hear from you! [Send us an email](https://www.booksnbytes.net/contact), and we would be happy to assist you.
-
